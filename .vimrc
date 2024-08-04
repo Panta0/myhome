@@ -297,25 +297,16 @@ au BufWrite /private/etc/pw.* set nowritebackup nobackup
 
 "auto add pyhton header --start  
 autocmd BufNewFile *.py 0r ~/.vim/vim_template/vim_python_header  
-autocmd BufNewFile *.py ks|call FileName()|'s  
-autocmd BufNewFile *.py ks|call CreatedTime()|'s  
-fun FileName()  
+autocmd BufNewFile *.py ks|call HeaderKey()|'s  
+fun HeaderKey()  
     if line("$") > 10  
         let l = 10  "?????L ????1   
     else  
         let l = line("$")  
     endif   
     exe "1," . l . "g/File Name:.*/s/File Name:.*/File Name: " .expand("%")    
-       "??????1????File Name: ???????  
-endfun   
-fun CreatedTime()  
-    if line("$") > 10  
-        let l = 10  
-    else  
-        let l = line("$")  
-    endif   
+    exe "1," . l . "g/Author:.*/s/Author:.*/Author: " .system('whoami')->trim()   
     exe "1," . l . "g/Created Time:.*/s/Created Time:.*/Created Time: " .strftime("%Y-%m-%d %T")   
-        "??Create Time: ???????  
 endfun   
 "auto add python header --end  
 """"""""""""""""""""""""""""""
